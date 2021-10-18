@@ -8,6 +8,16 @@ namespace CompAndDel
     {
         static void Main(string[] args)
         {
+            PictureProvider provider = new PictureProvider();
+            IPicture picture = provider.GetPicture(@"Luke.jpg");
+
+            PipeSerial pipeSerial2 = new PipeSerial(new FilterNegative(), new PipeNull());
+            PipeSerial pipeSerial1 = new PipeSerial(new FilterGreyscale(), pipeSerial2);
+
+            IPicture result = pipeSerial1.Send(picture);
+
+            provider = new PictureProvider();
+            provider.SavePicture(result, @"Resultado.jpg");
         }
     }
 }
