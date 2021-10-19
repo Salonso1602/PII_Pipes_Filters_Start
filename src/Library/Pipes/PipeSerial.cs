@@ -44,5 +44,6 @@ namespace CompAndDel.Pipes
             picture = this.filtro.Filter(picture);
             return this.nextPipe.Send(picture);
         }
+        
     }
 }
