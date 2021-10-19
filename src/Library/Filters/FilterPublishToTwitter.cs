@@ -7,8 +7,11 @@ namespace CompAndDel
     {
         public IPicture Filter (IPicture image)
         {
+            PictureProvider tempProv = new PictureProvider();
+            tempProv.SavePicture(image, @"PipeIntermedioATwitter.jpg");
+
             TwitterImage twitter = new TwitterImage();
-            Console.WriteLine(twitter.PublishToTwitter("ALONSOPAIN (OC do not steal)", @"PipeIntermedio" + (SaveProgress.numProgreso) + ".jpg"));
+            Console.WriteLine(twitter.PublishToTwitter("aaaa", @"PipeIntermedioATwitter.jpg"));
 
             return image;
         }

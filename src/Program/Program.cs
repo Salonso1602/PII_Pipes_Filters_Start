@@ -9,14 +9,16 @@ namespace CompAndDel
         static void Main(string[] args)
         {
             PictureProvider provider = new PictureProvider();
-            IPicture picture = provider.GetPicture(@"Luke.jpg");
+            IPicture picture = provider.GetPicture(@"beer.jpg");
 
-            PipeSerial pipeSerial3 = new PipeSerial(new FilterGreyscale(), new PipeNull());
-            PipeSerial pipeSerial2 = new PipeSerial(new Twitter(), pipeSerial3);
-            PipeSerial pipeSerial1 = new PipeSerial(new SaveProgress(), pipeSerial2);
-            PipeSerial pipeSerial0 = new PipeSerial(new FilterNegative(), pipeSerial1);
+            IPipe pipeNegative = new PipeSerial(new FilterNegative(), new PipeNull());
 
-            IPicture result = pipeSerial0.Send(picture);
+            IPipe pipeTwitter = new PipeSerial(new Twitter(), new PipeNull());
+
+            IPipe pipeCond = new PipeBranchIfHasFace(pipeTwitter, pipeNegative);
+            IPipe pipeSerialGrey = new PipeSerial(new FilterGreyscale(), pipeCond);
+
+            IPicture result = pipeSerialGrey.Send(picture);
 
             provider = new PictureProvider();
             provider.SavePicture(result, @"PathToImage.jpg");
