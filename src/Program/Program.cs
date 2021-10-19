@@ -12,10 +12,11 @@ namespace CompAndDel
             IPicture picture = provider.GetPicture(@"Luke.jpg");
 
             PipeSerial pipeSerial3 = new PipeSerial(new FilterGreyscale(), new PipeNull());
-            PipeSerial pipeSerial2 = new PipeSerial(new SaveProgress(), pipeSerial3);
-            PipeSerial pipeSerial1 = new PipeSerial(new FilterNegative(), pipeSerial2);
+            PipeSerial pipeSerial2 = new PipeSerial(new Twitter(), pipeSerial3);
+            PipeSerial pipeSerial1 = new PipeSerial(new SaveProgress(), pipeSerial2);
+            PipeSerial pipeSerial0 = new PipeSerial(new FilterNegative(), pipeSerial1);
 
-            IPicture result = pipeSerial1.Send(picture);
+            IPicture result = pipeSerial0.Send(picture);
 
             provider = new PictureProvider();
             provider.SavePicture(result, @"PathToImage.jpg");
