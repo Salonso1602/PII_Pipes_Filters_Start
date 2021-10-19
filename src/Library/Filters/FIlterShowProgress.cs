@@ -3,7 +3,7 @@ namespace CompAndDel
     public class SaveProgress : IFilter
     {
         private static int numProgreso = 0;
-        private static int NumProgreso 
+        public static int NumProgreso 
         {
             get
             {
